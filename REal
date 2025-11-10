@@ -1,0 +1,201 @@
+local Config = {
+    openKey = 289,
+    theme = { r=0, g=191, b=255 },
+    header = "XPIRE",
+}
+
+local TabData = {
+    MAIN = { pages = {"Player", "Movement", "Actions"}, currentPage = 1 },
+    AIM = { pages = {"Aimbot", "Triggerbot", "Settings"}, currentPage = 1 },
+    ESP = { pages = {"Players", "Vehicles", "Objects"}, currentPage = 1 },
+    WORLD = { pages = {"Time", "Weather", "Props"}, currentPage = 1 },
+    SETTINGS = { pages = {"Controls", "Display", "About"}, currentPage = 1 }
+}
+
+local TabNames = { "MAIN", "AIM", "ESP", "WORLD", "SETTINGS" }
+local selectedTab = 1
+local menuOpen = false
+
+local MenuWindow = SusanoMenuWindow(Config.header, 350, 150, 750, 500)
+SusanoMenuSetKeybind(MenuWindow, Config.openKey)
+SusanoMenuSetAccent(MenuWindow, Config.theme.r, Config.theme.g, Config.theme.b)
+
+local SidebarSection = SusanoMenuAddSection(MenuWindow, "Navigation", 5, 5, 150, 485)
+
+local ContentSection = SusanoMenuAddSection(MenuWindow, "Content", 160, 5, 585, 485)
+
+local TabLabels = {}
+for i, tabName in ipairs(TabNames) do
+    TabLabels[i] = SusanoMenuLabel(SidebarSection, "  " .. tabName)
+end
+
+local PageIndicator = SusanoMenuLabel(ContentSection, "")
+local NavigationHints = SusanoMenuLabel(ContentSection, "")
+
+local function updateContent()
+    local currentTabName = TabNames[selectedTab]
+    local currentTabData = TabData[currentTabName]
+    local currentPageName = currentTabData.pages[currentTabData.currentPage]
+    
+    SusanoMenuUpdateLabel(PageIndicator, string.format("Tab: %s | Page: %s (%d/%d)", 
+        currentTabName, currentPageName, currentTabData.currentPage, #currentTabData.pages))
+    
+    SusanoMenuUpdateLabel(NavigationHints, "UP/DOWN: Switch Tab | LEFT/RIGHT: Switch Page | F2: Close")
+    
+    SusanoMenuClearSection(ContentSection)
+    
+    PageIndicator = SusanoMenuLabel(ContentSection, string.format("Tab: %s | Page: %s (%d/%d)", 
+        currentTabName, currentPageName, currentTabData.currentPage, #currentTabData.pages))
+    NavigationHints = SusanoMenuLabel(ContentSection, "UP/DOWN: Switch Tab | LEFT/RIGHT: Switch Page | F2: Close")
+    
+    SusanoMenuLabel(ContentSection, "")
+    SusanoMenuLabel(ContentSection, "═══════════════════════════════════════")
+    SusanoMenuLabel(ContentSection, string.format("         %s - %s", currentTabName, currentPageName))
+    SusanoMenuLabel(ContentSection, "═══════════════════════════════════════")
+    SusanoMenuLabel(ContentSection, "")
+    
+    if currentTabName == "MAIN" then
+        if currentPageName == "Player" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Movement" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Actions" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        end
+    elseif currentTabName == "AIM" then
+        if currentPageName == "Aimbot" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Triggerbot" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Settings" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        end
+    elseif currentTabName == "ESP" then
+        if currentPageName == "Players" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Vehicles" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Objects" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        end
+    elseif currentTabName == "WORLD" then
+        if currentPageName == "Time" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Weather" then
+            SusanoMenuLabel(ContentSection, "test:")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        elseif currentPageName == "Props" then
+            SusanoMenuLabel(ContentSection, "test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+            SusanoMenuLabel(ContentSection, "• test")
+        end
+    elseif currentTabName == "SETTINGS" then
+        if currentPageName == "Controls" then
+            SusanoMenuLabel(ContentSection, "Control Settings:")
+            SusanoMenuLabel(ContentSection, "• F2: Open/Close Menu")
+            SusanoMenuLabel(ContentSection, "• UP/DOWN: Switch Tabs")
+            SusanoMenuLabel(ContentSection, "• LEFT/RIGHT: Switch Pages")
+        elseif currentPageName == "Display" then
+            SusanoMenuLabel(ContentSection, "test")
+        elseif currentPageName == "About" then
+            SusanoMenuLabel(ContentSection, "About XPIRE:")
+            SusanoMenuLabel(ContentSection, "• Version: 1.0.0")
+        end
+    end
+    
+    SusanoMenuLabel(ContentSection, "")
+    SusanoMenuLabel(ContentSection, "test")
+    SusanoMenuLabel(ContentSection, "test")
+    
+    for i, label in ipairs(TabLabels) do
+        local prefix = (i == selectedTab) and "► " or "  "
+        SusanoMenuUpdateLabel(label, prefix .. TabNames[i])
+    end
+end
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        
+        if menuOpen and SusanoMenuIsVisible(MenuWindow) then
+            if IsControlJustPressed(0, 172) then
+                selectedTab = selectedTab - 1
+                if selectedTab < 1 then selectedTab = #TabNames end
+                updateContent()
+                Citizen.Wait(150)
+            elseif IsControlJustPressed(0, 173) then
+                selectedTab = selectedTab + 1
+                if selectedTab > #TabNames then selectedTab = 1 end
+                updateContent()
+                Citizen.Wait(150)
+            end
+            
+            local currentTabName = TabNames[selectedTab]
+            local currentTabData = TabData[currentTabName]
+            
+            if IsControlJustPressed(0, 174) then
+                currentTabData.currentPage = currentTabData.currentPage - 1
+                if currentTabData.currentPage < 1 then 
+                    currentTabData.currentPage = #currentTabData.pages 
+                end
+                updateContent()
+                Citizen.Wait(150)
+            elseif IsControlJustPressed(0, 175) then
+                currentTabData.currentPage = currentTabData.currentPage + 1
+                if currentTabData.currentPage > #currentTabData.pages then 
+                    currentTabData.currentPage = 1 
+                end
+                updateContent()
+                Citizen.Wait(150)
+            end
+        end
+        
+        if IsControlJustPressed(0, Config.openKey) then
+            menuOpen = not menuOpen
+            if menuOpen then
+                updateContent()
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+    updateContent()
+    SusanoMenuNotification("~b~XPIRE ~w~menu loaded~n~~w~Press ~b~F2 ~w~to open~n~~w~Use ~y~arrow keys ~w~to navigate")
+end)
+    SusanoMenuNotification("~b~XPIRE ~w~menu loaded~n~~w~Press ~b~F2 ~w~to open")
+end)
