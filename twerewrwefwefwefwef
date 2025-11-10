@@ -1,0 +1,187 @@
+local Config = {
+    openKey = 56,
+    theme = { r=0, g=191, b=255 },
+    bg = { r=0, g=0, b=0, a=160 },
+    text = { r=230, g=230, b=230, a=240 },
+    header = "XPIRE",
+}
+
+local TabData = {
+    MAIN = { pages = {"Player", "Movement", "Actions"}, currentPage = 1 },
+    AIM = { pages = {"Aimbot", "Triggerbot", "Settings"}, currentPage = 1 },
+    ESP = { pages = {"Players", "Vehicles", "Objects"}, currentPage = 1 },
+    WORLD = { pages = {"Time", "Weather", "Props"}, currentPage = 1 },
+    SETTINGS = { pages = {"Controls", "Display", "About"}, currentPage = 1 }
+}
+
+local TabNames = { "MAIN", "AIM", "ESP", "WORLD", "SETTINGS" }
+local selectedTab = 1
+local menuOpen = false
+
+local function drawText(x, y, scale, text, r,g,b,a, centre)
+    SetTextFont(4)
+    SetTextScale(scale, scale)
+    SetTextColour(r,g,b,a)
+    SetTextOutline()
+    if centre then SetTextCentre(true) end
+    SetTextEntry("STRING")
+    AddTextComponentString(text)
+    DrawText(x, y)
+end
+
+local function drawRect(x,y,w,h,r,g,b,a)
+    DrawRect(x, y, w, h, r, g, b, a)
+end
+
+local function drawMenu()
+    local baseX, baseY = 0.05, 0.15
+    local totalWidth, totalHeight = 0.75, 0.6
+    local sidebarWidth = 0.18
+    local contentWidth = totalWidth - sidebarWidth - 0.02
+    local headerH = 0.05
+    
+    drawRect(baseX + totalWidth/2, baseY + totalHeight/2, totalWidth, totalHeight, Config.bg.r, Config.bg.g, Config.bg.b, Config.bg.a)
+    
+    drawRect(baseX + totalWidth/2, baseY + headerH/2, totalWidth, headerH, Config.theme.r, Config.theme.g, Config.theme.b, 220)
+    drawText(baseX + totalWidth/2, baseY + 0.008, 0.55, Config.header, 255, 255, 255, 255, true)
+    
+    drawRect(baseX + sidebarWidth/2, baseY + headerH + (totalHeight - headerH)/2, sidebarWidth, totalHeight - headerH, 20, 20, 30, 200)
+    
+    local tabHeight = 0.06
+    local tabY = baseY + headerH + 0.02
+    
+    for i, tabName in ipairs(TabNames) do
+        local isSelected = (i == selectedTab)
+        local tabBgAlpha = isSelected and 100 or 40
+        
+        drawRect(baseX + sidebarWidth/2, tabY + tabHeight/2, sidebarWidth - 0.01, tabHeight - 0.005, 
+                Config.theme.r, Config.theme.g, Config.theme.b, tabBgAlpha)
+        
+        local prefix = isSelected and "► " or "  "
+        drawText(baseX + 0.01, tabY + 0.015, 0.35, prefix .. tabName, 255, 255, 255, isSelected and 255 or 180, false)
+        
+        tabY = tabY + tabHeight + 0.005
+    end
+    
+    local contentX = baseX + sidebarWidth + 0.02
+    local contentY = baseY + headerH
+    
+    drawRect(contentX + contentWidth/2, contentY + (totalHeight - headerH)/2, contentWidth, totalHeight - headerH, 10, 10, 20, 180)
+    
+    local currentTabName = TabNames[selectedTab]
+    local currentTabData = TabData[currentTabName]
+    local currentPageName = currentTabData.pages[currentTabData.currentPage]
+    
+    drawRect(contentX + contentWidth/2, contentY + 0.03, contentWidth - 0.02, 0.06, Config.theme.r, Config.theme.g, Config.theme.b, 120)
+    drawText(contentX + contentWidth/2, contentY + 0.008, 0.45, currentTabName .. " - " .. currentPageName, 255, 255, 255, 255, true)
+    drawText(contentX + contentWidth/2, contentY + 0.035, 0.32, string.format("Page %d/%d", currentTabData.currentPage, #currentTabData.pages), 200, 200, 200, 220, true)
+    
+    local bodyY = contentY + 0.08
+    drawText(contentX + 0.02, bodyY, 0.38, "Features:", Config.theme.r, Config.theme.g, Config.theme.b, 255, false)
+    
+    local features = {}
+    if currentTabName == "MAIN" then
+        if currentPageName == "Player" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Movement" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Actions" then
+            features = {"• Test", "• Test", "• Test"}
+        end
+    elseif currentTabName == "AIM" then
+        if currentPageName == "Aimbot" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Triggerbot" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Settings" then
+            features = {"• Test", "• Test", "• Test"}
+        end
+    elseif currentTabName == "ESP" then
+        if currentPageName == "Players" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Vehicles" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Objects" then
+            features = {"• Test", "• Test", "• Test"}
+        end
+    elseif currentTabName == "WORLD" then
+        if currentPageName == "Time" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Weather" then
+            features = {"• Test", "• Test", "• Test"}
+        elseif currentPageName == "Props" then
+            features = {"• Test", "• Test", "• Test"}
+        end
+    elseif currentTabName == "SETTINGS" then
+        if currentPageName == "Controls" then
+            features = {"• F2: Open/Close Menu", "• UP/DOWN: Switch Tabs", "• LEFT/RIGHT: Switch Pages"}
+        elseif currentPageName == "Display" then
+            features = {"• Menu Position", "• Theme Colors", "• Transparency"}
+        elseif currentPageName == "About" then
+            features = {"• Version: 1.0.0", "• Made for Susano"}
+        end
+    end
+    
+    bodyY = bodyY + 0.04
+    for _, feature in ipairs(features) do
+        drawText(contentX + 0.02, bodyY, 0.32, feature, 220, 220, 220, 240, false)
+        bodyY = bodyY + 0.035
+    end
+    
+    drawText(contentX + contentWidth/2, contentY + (totalHeight - headerH) - 0.02, 0.26, 
+            "UP/DOWN: Tabs | LEFT/RIGHT: Pages | F2: Close", 150, 150, 150, 180, true)
+end
+
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(0)
+        
+        if IsControlJustPressed(0, Config.openKey) then
+            menuOpen = not menuOpen
+        end
+        
+        if menuOpen then
+            DisableControlAction(0, 1, true)
+            DisableControlAction(0, 2, true)
+            DisableControlAction(0, 25, true)
+            
+            drawMenu()
+            
+            if IsControlJustPressed(0, 172) then
+                selectedTab = selectedTab - 1
+                if selectedTab < 1 then selectedTab = #TabNames end
+                Citizen.Wait(150)
+            elseif IsControlJustPressed(0, 173) then
+                selectedTab = selectedTab + 1
+                if selectedTab > #TabNames then selectedTab = 1 end
+                Citizen.Wait(150)
+            end
+            
+            local currentTabName = TabNames[selectedTab]
+            local currentTabData = TabData[currentTabName]
+            
+            if IsControlJustPressed(0, 174) then
+                currentTabData.currentPage = currentTabData.currentPage - 1
+                if currentTabData.currentPage < 1 then 
+                    currentTabData.currentPage = #currentTabData.pages 
+                end
+                Citizen.Wait(150)
+            elseif IsControlJustPressed(0, 175) then
+                currentTabData.currentPage = currentTabData.currentPage + 1
+                if currentTabData.currentPage > #currentTabData.pages then 
+                    currentTabData.currentPage = 1 
+                end
+                Citizen.Wait(150)
+            end
+        end
+    end
+end)
+
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+    if TriggerEvent then
+        TriggerEvent('chat:addMessage', { 
+            args = { '^4[XPIRE]^7', 'Menu loaded! Press ^5F2^7 to open. Use ^3arrow keys^7 to navigate.' } 
+        })
+    end
+end)
