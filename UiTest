@@ -1,0 +1,52 @@
+local Config = {
+    openKey = 289,
+    theme = { r=0, g=191, b=255 },
+    header = "X P I R E",
+}
+
+local Tabs = { "MAIN", "AIM", "ESP", "WORLD", "SETTINGS" }
+local selectedTab = 1
+local menuOpen = false
+
+local MenuWindow = SusanoMenuTabbedWindow(Config.header, 400, 200, 600, 450, 150)
+SusanoMenuSetKeybind(MenuWindow, Config.openKey)
+SusanoMenuSetAccent(MenuWindow, Config.theme.r, Config.theme.g, Config.theme.b)
+
+local MainTab = SusanoMenuAddTab(MenuWindow, "MAIN")
+local AimTab = SusanoMenuAddTab(MenuWindow, "AIM")
+local EspTab = SusanoMenuAddTab(MenuWindow, "ESP")
+local WorldTab = SusanoMenuAddTab(MenuWindow, "WORLD")
+local SettingsTab = SusanoMenuAddTab(MenuWindow, "SETTINGS")
+
+local MainSection = SusanoMenuAddSection(MainTab, "Main Features", 5, 12, 590, 400)
+local AimSection = SusanoMenuAddSection(AimTab, "Aim Features", 5, 12, 590, 400)
+local EspSection = SusanoMenuAddSection(EspTab, "ESP Features", 5, 12, 590, 400)
+local WorldSection = SusanoMenuAddSection(WorldTab, "World Features", 5, 12, 590, 400)
+local SettingsSection = SusanoMenuAddSection(SettingsTab, "Settings", 5, 12, 590, 400)
+
+SusanoMenuLabel(MainSection, "═══════════════════════════════")
+SusanoMenuLabel(MainSection, "         MAIN TAB")
+SusanoMenuLabel(MainSection, "═══════════════════════════════")
+
+SusanoMenuLabel(AimSection, "═══════════════════════════════")
+SusanoMenuLabel(AimSection, "         AIM TAB")
+SusanoMenuLabel(AimSection, "═══════════════════════════════")
+
+SusanoMenuLabel(EspSection, "═══════════════════════════════")
+SusanoMenuLabel(EspSection, "         ESP TAB")
+SusanoMenuLabel(EspSection, "═══════════════════════════════")
+
+SusanoMenuLabel(WorldSection, "═══════════════════════════════")
+SusanoMenuLabel(WorldSection, "        WORLD TAB")
+SusanoMenuLabel(WorldSection, "═══════════════════════════════")
+
+SusanoMenuLabel(SettingsSection, "═══════════════════════════════")
+SusanoMenuLabel(SettingsSection, "       SETTINGS TAB")
+SusanoMenuLabel(SettingsSection, "═══════════════════════════════")
+SusanoMenuLabel(SettingsSection, "  F2  - Open/Close Menu")
+SusanoMenuLabel(SettingsSection, "  TAB - Switch Between Tabs")
+
+Citizen.CreateThread(function()
+    Citizen.Wait(1000)
+    SusanoMenuNotification("~b~XPIRE ~w~menu loaded~n~~w~Press ~b~F2 ~w~to open")
+end)
