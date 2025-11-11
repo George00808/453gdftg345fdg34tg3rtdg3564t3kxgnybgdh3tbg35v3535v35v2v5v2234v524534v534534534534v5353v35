@@ -20,6 +20,10 @@ MachoInjectResource("AFR-Player-Core",[[
 TriggerServerEvent('ambulance:revive:player', 648)
 ]])
 
+MachoInjectResource("zv-fleeca", [[
+TriggerServerEvent('zv-fleeca:SERVER:Succeed_Interaction', 3, 3)
+]])
+
 
 ------------------------------------------------------------------------------------------------------------
 
@@ -43,6 +47,10 @@ TriggerServerEvent('ambulance:addItem', medkit)
 
 Susano.InjectResource("AFR-Player-Core",[[
 TriggerServerEvent('ambulance:revive:player', 648)
+]])
+
+Susano.InjectResource("zv-fleeca", [[
+TriggerServerEvent('zv-fleeca:SERVER:Succeed_Interaction', 3, 3)
 ]])
 
 
