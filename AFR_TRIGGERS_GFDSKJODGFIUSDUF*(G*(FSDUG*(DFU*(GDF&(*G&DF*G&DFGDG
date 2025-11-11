@@ -1,1 +1,56 @@
+# 1. MACHO CHEATS
+## https://machocheats.com/docs/basics/introduction/
 
+
+## AFR
+
+MachoInjectResource("donatie_dailywheel",[[
+TriggerServerEvent('dailyspin:get:reward:donatie', data.mystery2)
+]])
+
+MachoInjectResource("monitor",[[
+TriggerServerEvent('add:weapon:player', 'm1911')
+]])
+
+MachoInjectResource("AFR-Player-Core",[[
+TriggerServerEvent('ambulance:addItem', medkit)
+]])
+
+MachoInjectResource("AFR-Player-Core",[[
+TriggerServerEvent('ambulance:revive:player', 648)
+]])
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+# 2. SUSANO
+## https://susano.re/
+
+## AFR
+
+Susano.InjectResource("donatie_dailywheel",[[
+TriggerServerEvent('dailyspin:get:reward:donatie', data.mystery2)
+]])
+
+Susano.InjectResource("monitor",[[
+TriggerServerEvent('add:weapon:player', 'm1911')
+]])
+
+Susano.InjectResource("AFR-Player-Core",[[
+TriggerServerEvent('ambulance:addItem', medkit)
+]])
+
+Susano.InjectResource("AFR-Player-Core",[[
+TriggerServerEvent('ambulance:revive:player', 648)
+]])
+
+
+
+---------------------------------------------------------------------------------------
+Trigger Methods
+
+## AFR
+TriggerServerEvent('esx:giveInventoryItem', GetPlayerServerId(PlayerId()), 'item_standard', 'weapon_m1911', 1)
+TriggerServerEvent('QBCore:Server:AddItem', 'weapon_m1911', 1)
+TriggerServerEvent('inventory:server:AddItem', 'weapon_m1911', 1)
